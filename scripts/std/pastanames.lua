@@ -1,8 +1,9 @@
 --[[
 
   This module provides the following functionality:
-    - #pastaname <cn>: rename unnameds to a delicious variety of pasta, with a custom prefix to distinguish the renamed
+    - #pastaname <cn>: rename players to a delicious variety of pasta, with a custom prefix to distinguish the renamed
     - auto-pastaname: change unnamed player's name to a pasta-variety upon connect (occasionally makes the command redundant)
+    - no_unnaming: any name change to "unnamed" will not be visible to other players
 
   Ideas by a_theory and Star
   Implementation by Mr.Benz
@@ -192,3 +193,11 @@ spaghetti.addhook("connected", function(info)
   end
 
 end)
+
+local function no_unnaming(info)
+  if info.text == "unnamed" then 
+    info.skip = true 
+  end
+end
+
+spaghetti.addhook(server.N_SWITCHNAME, no_unnaming)
